@@ -18,6 +18,10 @@ defmodule Traffic.TrafficLights do
     GenServer.call(__MODULE__, {:queue, lights, car})
   end
 
+  def next_sequence() do
+    GenServer.call(__MODULE__, :next_sequence)
+  end
+
   def process_queue() do
     GenServer.cast(__MODULE__, :process_queue)
   end
@@ -25,6 +29,17 @@ defmodule Traffic.TrafficLights do
   # Internal functions
   def init([]) do
     {:ok, %{a: [], b: [], sequence: @sequence, current: 0}}
+  end
+
+  def handle_call(:next_sequence, from, state) do
+    %{sequence: sequence, current: current} = state
+    next = case Enum.at(sequence, current + 1) do
+      nil -> 0
+      seq -> current + 1
+    end
+
+    # Map.put(state, :current, next)
+    {:reply, next, %{state | current: next}}
   end
 
   def handle_call({:queue, lights, car}, from, state) do

@@ -1,7 +1,7 @@
 defmodule Traffic do
   def generate(n) do
-    Traffic.TrafficLights.process_queue
     gen_cars(n)
+    Traffic.TrafficLights.process_queue
   end
 
   def gen_cars(0), do: :ok
