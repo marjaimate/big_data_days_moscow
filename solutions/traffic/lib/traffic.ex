@@ -9,7 +9,8 @@ defmodule Traffic do
     # spawn some cars here
     car = spawn Traffic.Car, :start, []
     # we need some random stuff here
-    Traffic.TrafficLights.queue_car :a, car
+    lights = [:a, :b] |> Enum.random
+    Traffic.TrafficLights.queue_car lights, car
     gen_cars(n-1)
   end
 end

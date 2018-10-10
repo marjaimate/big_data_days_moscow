@@ -28,7 +28,7 @@ defmodule Traffic.TrafficLights do
   end
 
   def handle_call({:queue, lights, car}, from, state) do
-    IO.puts "Queuing car #{car} at #{lights}"
+    IO.puts "Queuing car #{inspect car} at #{lights}"
     state = Map.update(state, lights, [], fn(q) -> q ++ [car] end)
     {:reply, state, state}
   end
