@@ -35,6 +35,7 @@ defmodule Traffic.TrafficLights do
 
   def handle_cast(:process_queue, %{sequence: sequence, current: current} = state) do
     state = process_queue(Enum.at(sequence, current), state)
+    IO.puts "Processing queue at state: #{inspect state}"
     :timer.sleep(3000)
     GenServer.cast(self(), :process_queue)
     {:noreply, state}
